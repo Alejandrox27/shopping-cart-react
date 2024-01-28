@@ -1,4 +1,4 @@
-import { createContext, useReducer, useState } from "react";
+import { createContext, useReducer } from "react";
 import { cartReducer, initialState } from "../reducer/cart";
 
 export const CartContext = createContext()
@@ -8,6 +8,11 @@ export function CartProvider ({children}){
 
     const addToCart = product => dispatch({
         type: 'ADD_TO_CART',
+        payload: product
+    })
+
+    const removeOneFromCart = product => dispatch({
+        type: 'REMOVE_ONE_FROM_CART',
         payload: product
     })
 
@@ -23,6 +28,7 @@ export function CartProvider ({children}){
     return (
         <CartContext.Provider value={{
             cart: state, 
+            removeOneFromCart,
             removeFromCart, 
             addToCart, 
             clearCart}}>

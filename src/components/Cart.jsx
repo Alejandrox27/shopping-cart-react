@@ -4,7 +4,7 @@ import { useId } from "react";
 import { CartIcon, ClearCartIcon } from "./icons";
 import { useCart } from '../hooks/useCart';
 
-function CartItem ({thumbnail, price, title, quantity, addToCart}){
+function CartItem ({thumbnail, price, title, quantity, addToCart, removeOneFromCart}){
     return (
         <li>
             <img src={thumbnail} alt={title} />
@@ -17,6 +17,7 @@ function CartItem ({thumbnail, price, title, quantity, addToCart}){
                     Qty: {quantity}
                 </small>
                 <button onClick={addToCart}>+</button>
+                <button onClick={removeOneFromCart}>-</button>
             </footer>
         </li>
     )
@@ -24,7 +25,7 @@ function CartItem ({thumbnail, price, title, quantity, addToCart}){
 
 export function Cart() {
     const cartCheckboxId = useId();
-    const {cart, clearCart, addToCart} = useCart()
+    const {cart, clearCart, addToCart, removeOneFromCart} = useCart()
 
     return (
         <>
@@ -36,7 +37,10 @@ export function Cart() {
         <aside className="cart">
             <ul>
                 {cart.map(product => (
-                    <CartItem key={product.id} {...product} addToCart={() => addToCart(product)} />
+                    <CartItem 
+                    key={product.id} {...product} 
+                    addToCart={() => addToCart(product)}
+                    removeOneFromCart={() => removeOneFromCart(product)} />
                 ))}
             </ul>
 
